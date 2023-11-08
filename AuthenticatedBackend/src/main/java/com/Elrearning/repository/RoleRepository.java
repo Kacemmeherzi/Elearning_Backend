@@ -1,11 +1,11 @@
-package com.unkownkoder.repository;
+package com.Elrearning.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.unkownkoder.models.Role;
+import com.Elrearning.models.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer>{

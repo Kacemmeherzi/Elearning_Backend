@@ -1,4 +1,4 @@
-package com.unkownkoder;
+package com.Elrearning;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,15 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.unkownkoder.models.ApplicationUser;
-import com.unkownkoder.models.Role;
-import com.unkownkoder.repository.RoleRepository;
-import com.unkownkoder.repository.UserRepository;
+import com.Elrearning.models.User;
+import com.Elrearning.models.Role;
+import com.Elrearning.repository.RoleRepository;
+import com.Elrearning.repository.UserRepository;
 
 @SpringBootApplication
-public class AuthenticatedBackendApplication {
+public class ElearningBackendApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(AuthenticatedBackendApplication.class, args);
+		SpringApplication.run(ElearningBackendApplication.class, args);
 	}
 
 	@Bean
@@ -30,7 +30,7 @@ public class AuthenticatedBackendApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles);
+			User admin = new User(1, "admin", passwordEncode.encode("password"), roles);
 
 			userRepository.save(admin);
 		};

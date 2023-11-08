@@ -1,4 +1,4 @@
-package com.unkownkoder.models;
+package com.Elrearning.models;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,13 +20,26 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class ApplicationUser implements UserDetails{
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer userId;
 	@Column(unique=true)
     private String username;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "email",unique=true)
+	private String email;
+
+	@Column(name= "password")
     private String password;
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -37,13 +50,13 @@ public class ApplicationUser implements UserDetails{
     )
     private Set<Role> authorities;
 
-    public ApplicationUser() {
+    public User() {
 		super();
 		authorities = new HashSet<>();
 	}
 	
 
-	public ApplicationUser(Integer userId, String username, String password, Set<Role> authorities) {
+	public User(Integer userId, String username, String password, Set<Role> authorities) {
 		super();
 		this.userId = userId;
 		this.username = username;

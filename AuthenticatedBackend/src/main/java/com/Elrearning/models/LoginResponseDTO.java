@@ -1,23 +1,23 @@
-package com.unkownkoder.models;
+package com.Elrearning.models;
 
 public class LoginResponseDTO {
-    private ApplicationUser user;
+    private User user;
     private String jwt;
 
     public LoginResponseDTO(){
         super();
     }
 
-    public LoginResponseDTO(ApplicationUser user, String jwt){
+    public LoginResponseDTO(User user, String jwt){
         this.user = user;
         this.jwt = jwt;
     }
 
-    public ApplicationUser getUser(){
+    public User getUser(){
         return this.user;
     }
 
-    public void setUser(ApplicationUser user){
+    public void setUser(User user){
         this.user = user;
     }
 

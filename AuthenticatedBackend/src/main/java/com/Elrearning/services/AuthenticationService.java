@@ -1,4 +1,4 @@
-package com.unkownkoder.services;
+package com.Elrearning.services;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.unkownkoder.models.ApplicationUser;
-import com.unkownkoder.models.LoginResponseDTO;
-import com.unkownkoder.models.Role;
-import com.unkownkoder.repository.RoleRepository;
-import com.unkownkoder.repository.UserRepository;
+import com.Elrearning.models.User;
+import com.Elrearning.models.LoginResponseDTO;
+import com.Elrearning.models.Role;
+import com.Elrearning.repository.RoleRepository;
+import com.Elrearning.repository.UserRepository;
 
 @Service
 @Transactional
@@ -37,7 +37,7 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public ApplicationUser registerUser(String username, String password){
+    public User registerUser(String username, String password){
 
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").get();
@@ -46,7 +46,7 @@ public class AuthenticationService {
 
         authorities.add(userRole);
 
-        return userRepository.save(new ApplicationUser(0, username, encodedPassword, authorities));
+        return userRepository.save(new User(0, username, encodedPassword, authorities));
     }
 
     public LoginResponseDTO loginUser(String username, String password){
