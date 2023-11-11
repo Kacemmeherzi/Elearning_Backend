@@ -1,5 +1,7 @@
 package com.Elrearning.configuration;
 
+import com.Elrearning.services.JwtFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,13 +27,19 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.Elrearning.utils.RSAKeyProperties;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-public class SecurityConfiguration {
+public class SecurityConfiguration  {
 
+
+
+    @Autowired
+private JwtFilter jwtFilter ;
     private final RSAKeyProperties keys;
 
-    public SecurityConfiguration(RSAKeyProperties keys){
+    public SecurityConfiguration(JwtFilter jwtFilter, RSAKeyProperties keys){
+        this.jwtFilter = jwtFilter;
         this.keys = keys;
     }
 
@@ -54,14 +62,13 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/auth/**").permitAll();
-                auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                auth.anyRequest().authenticated();
+                auth.requestMatchers("/admin/**");
+                auth.requestMatchers("/user/**");
+                auth.anyRequest().authenticated().and()
+                        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
             });
             
-        http.oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(jwtAuthenticationConverter());
+
         http.sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
@@ -69,26 +76,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public JwtDecoder jwtDecoder(){
-        return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
-    }
 
-    @Bean
-    public JwtEncoder jwtEncoder(){
-        JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
-    }
 
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter(){
-        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        return jwtConverter;
-    }
-    
+
 }
