@@ -1,6 +1,7 @@
 package com.Elrearning.services;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,15 @@ public class TokenService {
     private JwtDecoder jwtDecoder;
 
     public String generateJwt(Authentication auth){
+        Date date = new Date() ;
+
 
         Instant now = Instant.now();
 
         String scope = auth.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(" "));
+
 
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
