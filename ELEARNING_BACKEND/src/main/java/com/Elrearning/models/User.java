@@ -28,13 +28,6 @@ public class User implements UserDetails{
 	@Column(unique=true)
     private String username;
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	@Column(name = "email",unique=true)
 	private String email;
@@ -56,12 +49,13 @@ public class User implements UserDetails{
 	}
 	
 
-	public User(Integer userId, String username, String password, Set<Role> authorities) {
+	public User(Integer userId, String username, String password,String email,Set<Role> authorities) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+		this.email=email ;
 	}
 
     public Integer getUserId() {
@@ -80,6 +74,14 @@ public class User implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return this.authorities;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

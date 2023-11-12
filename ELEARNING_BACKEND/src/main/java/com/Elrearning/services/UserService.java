@@ -1,5 +1,6 @@
 package com.Elrearning.services;
 
+import com.Elrearning.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Elrearning.repository.UserRepository;
+
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -25,5 +28,16 @@ public class UserService implements UserDetailsService {
 
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user is not valid"));
     }
+public List<User> getallusers() {
 
+return userRepository.findAll();
+}
+public boolean exist (Integer id) {
+
+        return userRepository.existsById(id);
+}
+public  void deleteuser (Integer id ){
+
+        userRepository.deleteById(id);
+}
 }

@@ -3,6 +3,7 @@ package com.Elrearning.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.Elrearning.models.RegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,16 +38,16 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(String username, String password){
+    public User registerUser(RegistrationDTO dto){
 
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
 
-        return userRepository.save(new User(0, username, encodedPassword, authorities));
+        return userRepository.save(new User(0, dto.getUsername(), encodedPassword, dto.getEmail(), authorities));
     }
 
     public LoginResponseDTO loginUser(String username, String password){

@@ -32,10 +32,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO body){
         if (userRepository.findByUsername(body.getUsername()).isPresent()){
-            return (ResponseEntity<?>) ResponseEntity.ok("arae");
+            return (ResponseEntity<?>) ResponseEntity.ok("User Already exist");
         }
       else {
-        authenticationService.registerUser(body.getUsername(), body.getPassword());
+        authenticationService.registerUser(body);
         return (ResponseEntity<?>) ResponseEntity.ok("ADDED");}
     }
     
