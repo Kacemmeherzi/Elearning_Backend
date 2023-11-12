@@ -4,6 +4,7 @@ package com.Elrearning.services;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,34 @@ public class TokenService {
 
         return Jwts.builder()
                 .setSubject(auth.getName())
-                .claim("Claims","YOU ROCKK")
+                .claim("Claims","YOU ROCK")
                 .setIssuedAt(date)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256, KEY)
                 .compact();
+    }
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public String getUsernameFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(KEY)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
+    public String getRoleFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(KEY)
+                .parseClaimsJws(token)
+                .getBody();
+        return (String) claims.get("roles");
     }
 
 }

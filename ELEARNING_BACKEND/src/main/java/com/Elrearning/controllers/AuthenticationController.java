@@ -1,7 +1,9 @@
 package com.Elrearning.controllers;
 
+import com.Elrearning.repository.UserRepository;
 import com.Elrearning.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,16 +26,24 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private UserRepository userRepository ;
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody RegistrationDTO body){
-        return authenticationService.registerUser(body.getUsername(), body.getPassword());
+    public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO body){
+        if (userRepository.findByUsername(body.getUsername()).isPresent()){
+            return (ResponseEntity<?>) ResponseEntity.ok("arae");
+        }
+      else {
+        authenticationService.registerUser(body.getUsername(), body.getPassword());
+        return (ResponseEntity<?>) ResponseEntity.ok("ADDED");}
     }
     
     @PostMapping("/login")
-    public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body){
+    public ResponseEntity<?>  loginUser(@RequestBody RegistrationDTO body){
 
-return   authenticationService.loginUser(body.getUsername(), body.getPassword());
+
+return   ResponseEntity.ok(authenticationService.loginUser(body.getUsername(), body.getPassword()));
 
     }
 }   
