@@ -13,13 +13,24 @@ public class RegistrationDTO {
 
     private String email;
 
+    private String usertype ;
+    public String getUsertype() {
+        return usertype;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
+    }
 
 
-    public RegistrationDTO(String username, String password,String email){
+
+
+    public RegistrationDTO(String username, String password,String email,String usertype){
         super();
         this.username = username;
         this.password = password;
         this.email=email ;
+        this.usertype = usertype ;
     }
     public void setEmail(String email) {
         this.email = email;

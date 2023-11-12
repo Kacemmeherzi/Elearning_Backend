@@ -35,7 +35,19 @@ public class User implements UserDetails{
 	@Column(name= "password")
     private String password;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
+	@Column(name= "usertype")
+	private String usertype;
+
+
+	@ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name="user_role_junction",
         joinColumns = {@JoinColumn(name="user_id")},
@@ -49,11 +61,12 @@ public class User implements UserDetails{
 	}
 	
 
-	public User(Integer userId, String username, String password,String email,Set<Role> authorities) {
+	public User(Integer userId, String username, String password, String email, String usertype, Set<Role> authorities) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
+		this.usertype = usertype;
 		this.authorities = authorities;
 		this.email=email ;
 	}

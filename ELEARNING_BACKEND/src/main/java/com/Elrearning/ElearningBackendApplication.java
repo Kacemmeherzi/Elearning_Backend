@@ -30,7 +30,7 @@ public class ElearningBackendApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			User admin = new User(1, "admin", passwordEncode.encode("password"),"admin", roles);
+			User admin = new User(1, "admin", passwordEncode.encode("password"),"admin", "ADMIN", roles);
 
 			userRepository.save(admin);
 		};
