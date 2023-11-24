@@ -1,5 +1,6 @@
 package com.Elrearning.controllers;
 
+import com.Elrearning.models.RegistrationDTO;
 import com.Elrearning.models.User;
 import com.Elrearning.repository.UserRepository;
 import com.Elrearning.services.UserService;
@@ -44,7 +45,7 @@ private final UserRepository userRepository ;
     }
 
     @PostMapping("/addteacher")
-    public ResponseEntity<?> addTeacher (@RequestBody User user) {
+    public ResponseEntity<?> addTeacher (@RequestBody RegistrationDTO user) {
         if (!userService.existbyusername(user.getUsername())){
             userService.addteacher(user) ;
             return new  ResponseEntity<>("ADDED",HttpStatus.CREATED);

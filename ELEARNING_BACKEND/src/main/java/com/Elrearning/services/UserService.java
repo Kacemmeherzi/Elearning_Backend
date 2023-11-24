@@ -1,5 +1,6 @@
 package com.Elrearning.services;
 
+import com.Elrearning.models.RegistrationDTO;
 import com.Elrearning.models.Role;
 import com.Elrearning.models.User;
 import com.Elrearning.repository.RoleRepository;
@@ -45,7 +46,7 @@ public  void deleteuser (Integer id ){
         userRepository.deleteById(id);
 }
 
-public User addteacher (User user) {
+public void addteacher (RegistrationDTO user) {
     Role userRole = roleRepository.findByAuthority("USER").get();
 
     Set<Role> authorities = new HashSet<>();
@@ -53,7 +54,7 @@ public User addteacher (User user) {
     authorities.add(userRole);
     User teacher = new User(0, user.getUsername(),encoder.encode(user.getPassword()) ,user.getEmail(),"TEACHER",authorities);
        userRepository.save(teacher);
-       return user ;
+
 }
 
     public boolean exist(Integer id) {
