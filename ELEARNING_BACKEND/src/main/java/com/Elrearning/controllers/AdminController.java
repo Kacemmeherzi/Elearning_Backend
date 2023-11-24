@@ -91,6 +91,10 @@ if (!categorieService.checkifexist(category)){
     }else return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 
 }
+@PutMapping("/updatecategory/{id}")
+    public ResponseEntity<?> updatecategory (@PathVariable int id ,@RequestBody CategotyDTO categotyDTO) {
+        return null ;
+}
 }
 
 

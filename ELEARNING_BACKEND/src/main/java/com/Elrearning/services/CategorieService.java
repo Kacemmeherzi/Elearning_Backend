@@ -22,7 +22,7 @@ return categoryRepository.existsByLabel(category.getLabel());
     public Category addcategory (Category category) {
         categoryRepository.save(category) ;
         return category;
-
+//TODO : ADD IMAGE
 
 }
 public void deletecategory (int id ) {
@@ -34,5 +34,9 @@ public  boolean checkbyid (int id ) {return categoryRepository.existsById(id);}
         Category currentcategory = categoryRepository.findById(id).get();
 
 
+    }
+    public void getimage (){
+
+        //TODO : add images to category
     }
 }
