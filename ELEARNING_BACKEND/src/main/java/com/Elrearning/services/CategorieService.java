@@ -28,4 +28,6 @@ return categoryRepository.existsByLabel(category.getLabel());
 public void deletecategory (int id ) {
     categoryRepository.deleteById(id );
 }
+
+public  boolean checkbyid (int id ) {return categoryRepository.existsById(id);}
 }

@@ -1,8 +1,11 @@
 package com.Elrearning.controllers;
 
+import com.Elrearning.models.Category;
+import com.Elrearning.models.CategotyDTO;
 import com.Elrearning.models.RegistrationDTO;
 import com.Elrearning.models.User;
 import com.Elrearning.repository.UserRepository;
+import com.Elrearning.services.CategorieService;
 import com.Elrearning.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +23,13 @@ public class AdminController {
 private final UserRepository userRepository ;
     @Autowired
     private final UserService userService ;
+    @Autowired
+    private final CategorieService categorieService ;
 
-    public AdminController(UserRepository userRepository, UserService userService) {
+    public AdminController(UserRepository userRepository, UserService userService, CategorieService categorieService) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.categorieService = categorieService;
     }
 
 
@@ -66,9 +72,25 @@ private final UserRepository userRepository ;
 
         return new ResponseEntity<>(userService.updateuser(user,id),HttpStatus.OK);
 }
+@PostMapping ("/addcategory")
+    public ResponseEntity<?> addcategory (@RequestBody CategotyDTO categotyDTO){
+    Category category = new Category(0, categotyDTO.getLabel(), categotyDTO.getDescription() );
+if (!categorieService.checkifexist(category)){
 
+    categorieService.addcategory(category) ;
+    return new ResponseEntity<>("ADDED",HttpStatus.CREATED);
+}else
+    return new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
+}
 
+@DeleteMapping("/deletecategory/{id}")
+    public ResponseEntity<?> deletecategory(@PathVariable int id ) {
+    if (categorieService.checkbyid(id)){
+        categorieService.deletecategory(id);
+        return  new ResponseEntity<>("DELETED", HttpStatus.OK);
+    }else return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 
+}
 }
 
 
