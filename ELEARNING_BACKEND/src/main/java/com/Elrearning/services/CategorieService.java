@@ -30,4 +30,9 @@ public void deletecategory (int id ) {
 }
 
 public  boolean checkbyid (int id ) {return categoryRepository.existsById(id);}
+    public void updatecategory (Category category , int id ){
+        Category currentcategory = categoryRepository.findById(id).get();
+
+
+    }
 }
