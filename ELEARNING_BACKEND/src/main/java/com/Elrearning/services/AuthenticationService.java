@@ -46,8 +46,8 @@ public class AuthenticationService {
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
-      User user =  new User(0, dto.getUsername(), encodedPassword, dto.getEmail(), dto.getUsertype(), authorities);
-      user.setUsertype(dto.getUsertype());
+      User user =  new User(0, dto.getUsername(), encodedPassword, dto.getEmail(), "STUDENT", authorities);
+
         return userRepository.save(user);
     }
 

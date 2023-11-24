@@ -4,6 +4,7 @@ import com.Elrearning.models.User;
 import com.Elrearning.repository.UserRepository;
 import com.Elrearning.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +43,28 @@ private final UserRepository userRepository ;
         }
     }
 
+    @PostMapping("/addteacher")
+    public ResponseEntity<?> addTeacher (@RequestBody User user) {
+        if (!userService.existbyusername(user.getUsername())){
+            userService.addteacher(user) ;
+            return new  ResponseEntity<>("ADDED",HttpStatus.CREATED);
+        } else {
+
+            return  new ResponseEntity<>("ALREADY EXIST",HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+@GetMapping("/getallteachers")
+    public List<User> getAllTeachers () {
+        return  userService.getallteachers();
+}
+
+@PostMapping("updateteacher/{id}")
+    public ResponseEntity<String> updateTeacher (@RequestBody User user ,@PathVariable int id) {
 
 
-
+        return new ResponseEntity<>(userService.updateuser(user,id),HttpStatus.OK);
+}
 
 
 

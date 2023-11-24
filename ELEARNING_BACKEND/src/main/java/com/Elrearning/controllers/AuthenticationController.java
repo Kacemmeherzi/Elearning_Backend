@@ -33,6 +33,7 @@ public class AuthenticationController {
     public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO body){
         if (userRepository.findByUsername(body.getUsername()).isPresent()){
             return (ResponseEntity<?>) ResponseEntity.ok("User Already exist");
+
         }
       else {
         authenticationService.registerUser(body);
