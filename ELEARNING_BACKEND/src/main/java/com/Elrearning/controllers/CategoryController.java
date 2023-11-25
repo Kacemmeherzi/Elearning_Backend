@@ -61,7 +61,8 @@ public class CategoryController {
     }
     @PutMapping("/updatecategory/{id}")
     public ResponseEntity<?> updatecategory (@PathVariable int id ,@RequestBody CategotyDTO categotyDTO) {
-        return null ;
+        //TODO
+        return  null  ;
     }
     @GetMapping("/getimage/{name}")
     public ResponseEntity<?> getcategoryimage (@PathVariable String name) throws IOException {

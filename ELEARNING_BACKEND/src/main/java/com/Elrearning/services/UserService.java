@@ -79,11 +79,26 @@ public void addteacher (RegistrationDTO user) {
 
                    currentuser.get().setUsername(user.getUsername());
                } else return  ("USERNAME ALREADY TAKEN");
+
+
            }
 
             userRepository.saveAndFlush(currentuser.get());
         }else return ("USER NOT FOUND") ;
 
         return ("UPDATED");
+    }
+    public boolean updatepassword (String password ,int id ) {
+       User currentuser = userRepository.findById(id ).get() ;
+     //   System.out.println(currentuser.getPassword());
+       if ( !encoder.matches(password,currentuser.getPassword())){
+           currentuser.setPassword(encoder.encode(password));
+           userRepository.saveAndFlush(currentuser) ;
+           return true ;
+
+
+       }else {return false ;}
+
+
     }
 }
