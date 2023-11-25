@@ -23,13 +23,11 @@ public class AdminController {
 private final UserRepository userRepository ;
     @Autowired
     private final UserService userService ;
-    @Autowired
-    private final CategorieService categorieService ;
 
-    public AdminController(UserRepository userRepository, UserService userService, CategorieService categorieService) {
+    public AdminController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
-        this.categorieService = categorieService;
+
     }
 
 
@@ -66,35 +64,16 @@ private final UserRepository userRepository ;
         return  userService.getallteachers();
 }
 
+
 @PostMapping("updateteacher/{id}")
     public ResponseEntity<String> updateTeacher (@RequestBody User user ,@PathVariable int id) {
 
 
         return new ResponseEntity<>(userService.updateuser(user,id),HttpStatus.OK);
 }
-@PostMapping ("/addcategory")
-    public ResponseEntity<?> addcategory (@RequestBody CategotyDTO categotyDTO){
-    Category category = new Category(0, categotyDTO.getLabel(), categotyDTO.getDescription() );
-if (!categorieService.checkifexist(category)){
 
-    categorieService.addcategory(category) ;
-    return new ResponseEntity<>("ADDED",HttpStatus.CREATED);
-}else
-    return new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
-}
 
-@DeleteMapping("/deletecategory/{id}")
-    public ResponseEntity<?> deletecategory(@PathVariable int id ) {
-    if (categorieService.checkbyid(id)){
-        categorieService.deletecategory(id);
-        return  new ResponseEntity<>("DELETED", HttpStatus.OK);
-    }else return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 
-}
-@PutMapping("/updatecategory/{id}")
-    public ResponseEntity<?> updatecategory (@PathVariable int id ,@RequestBody CategotyDTO categotyDTO) {
-        return null ;
-}
 }
 
 

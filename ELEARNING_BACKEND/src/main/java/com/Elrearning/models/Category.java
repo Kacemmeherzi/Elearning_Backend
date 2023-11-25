@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 public class Category {
-    public Category(int id, String label, String description) {
-        this.id = id;
+    public Category( String label, String description) {
+
         this.label = label;
         this.description = description;
     }
@@ -18,6 +18,17 @@ public class Category {
 @Column(name ="description")
     private  String description ;
 
+    public FileEntity getFileEntity() {
+        return fileEntity;
+    }
+
+    public void setFileEntity(FileEntity fileEntity) {
+        this.fileEntity = fileEntity;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "file_entity_id")
+    private FileEntity fileEntity;
     public Category() {
 
     }

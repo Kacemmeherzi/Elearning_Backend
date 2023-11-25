@@ -3,6 +3,7 @@ package com.Elrearning;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.Elrearning.LocalStorageConfig.StorageConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +22,7 @@ public class ElearningBackendApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncode){
+	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncode, StorageConfig storageConfig){
 		return args ->{
 			if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
 			Role adminRole = roleRepository.save(new Role("ADMIN"));
@@ -33,6 +34,7 @@ public class ElearningBackendApplication {
 			User admin = new User(1, "admin", passwordEncode.encode("password"),"admin", "ADMIN", roles);
 
 			userRepository.save(admin);
+			storageConfig.init();
 		};
 	}
 }

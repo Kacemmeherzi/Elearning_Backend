@@ -5,6 +5,8 @@ import com.Elrearning.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategorieService {
     @Autowired
@@ -35,8 +37,12 @@ public  boolean checkbyid (int id ) {return categoryRepository.existsById(id);}
 
 
     }
-    public void getimage (){
+    public Category getbyid (int id ){
 
-        //TODO : add images to category
+     return  categoryRepository.findById(id).get() ;
+    }
+
+    public List<Category> getall() {
+         return  categoryRepository.findAll();
     }
 }
