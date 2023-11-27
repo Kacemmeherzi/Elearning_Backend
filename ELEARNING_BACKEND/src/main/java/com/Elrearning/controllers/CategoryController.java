@@ -38,18 +38,16 @@ public class CategoryController {
     public List<Category> getllcategories () {
         return  categorieService.getall();
     }
-    @PostMapping(value = "/addcategory",consumes = "multipart/form-data")
+    @PostMapping(value = "/addcategory")
     public ResponseEntity<?> addcategory (@ModelAttribute  CategotyDTO categotyDTO) throws IOException {
         Category category = new Category( categotyDTO.getLabel(), categotyDTO.getDescription() );
         if (!categorieService.checkifexist(category)){
-             FileEntity image = storageService.storeImage(categotyDTO.getFile());
 
-            category.setFileEntity(image);
 
             categorieService.addcategory(category) ;
             return new ResponseEntity<>("ADDED", HttpStatus.CREATED);
         }else
-            return new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("ALREADY EXIST YEE BRO ALEH HAKKA ",HttpStatus.NOT_ACCEPTABLE);
     }
     @DeleteMapping("/deletecategory/{id}")
     public ResponseEntity<?> deletecategory(@PathVariable int id ) {
@@ -64,28 +62,5 @@ public class CategoryController {
         //TODO
         return  null  ;
     }
-    @GetMapping("/getimage/{name}")
-    public ResponseEntity<?> getcategoryimage (@PathVariable String name) throws IOException {
 
-
-try {
-   byte[] image = storageService.loadImageAsBytes(name) ;
-   if (image != null) {
-
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-       headers.setContentDispositionFormData(name, name);
-
-       return   ResponseEntity.ok()
-               .headers(headers)
-               .body(image);
-
-   }
-} catch ( Exception e )  {
-    return ResponseEntity.notFound().build();
-}
-
-
-        return null;
-    }
 }

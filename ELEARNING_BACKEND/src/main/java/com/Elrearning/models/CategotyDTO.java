@@ -9,20 +9,14 @@ public class CategotyDTO {
     public CategotyDTO(String label, String description, MultipartFile file) {
         this.label = label;
         this.description = description;
-        this.file = file;
     }
 
     private String description ;
 
-    public MultipartFile getFile() {
-        return file;
-    }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
 
-    private MultipartFile file ;
+
+
 
     public String getLabel() {
         return label;

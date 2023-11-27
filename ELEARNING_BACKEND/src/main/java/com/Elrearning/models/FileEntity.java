@@ -31,8 +31,7 @@ private String filetype ;
     @Column
    private  String name ;
 
-    @OneToOne(mappedBy = "fileEntity", cascade = CascadeType.ALL)
-    private Category category;
+
     public FileEntity() {
 
     }
