@@ -3,14 +3,10 @@ package com.Elrearning.controllers;
 import com.Elrearning.LocalStorageConfig.FileStorageService;
 import com.Elrearning.models.Category;
 import com.Elrearning.models.CategotyDTO;
-import com.Elrearning.models.FileEntity;
 import com.Elrearning.services.CategorieService;
 import com.Elrearning.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,16 +18,12 @@ public class CategoryController {
 
     @Autowired
     private  final CategorieService categorieService ;
-    @Autowired
-    private final FileService fileService ;
-    @Autowired
-    private final FileStorageService storageService ;
 
-    public CategoryController(CategorieService categorieService,  FileService fileService, FileStorageService storageService) {
+
+    public CategoryController(CategorieService categorieService ) {
         this.categorieService = categorieService;
 
-        this.fileService = fileService;
-        this.storageService = storageService;
+
     }
 
     @GetMapping("/getallcategories")
