@@ -62,7 +62,7 @@ private JwtFilter jwtFilter ;
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/auth/**").permitAll();
-                auth.requestMatchers("/category/**").permitAll();
+                auth.requestMatchers("/category/**");
                 auth.requestMatchers("/admin/**");
                 auth.requestMatchers("/user/**");
                 auth.anyRequest().authenticated().and()

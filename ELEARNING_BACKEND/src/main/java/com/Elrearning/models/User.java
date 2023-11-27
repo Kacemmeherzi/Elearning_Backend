@@ -37,7 +37,15 @@ public class User implements UserDetails{
 	private String usertype;
 
 
-	@OneToMany(fetch=FetchType.EAGER)
+	public User(String username, String email, String password, String usertype, Set<Role> authorities) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.usertype = usertype;
+		this.authorities = authorities;
+	}
+
+	@ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name="user_role_junction",
         joinColumns = {@JoinColumn(name="user_id")},
