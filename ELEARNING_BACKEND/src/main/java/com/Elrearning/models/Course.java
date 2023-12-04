@@ -2,7 +2,8 @@ package com.Elrearning.models;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,7 @@ public class Course {
     @Column(name = "description_cours")
     private String course_description;
     @Column(name = "date dajout ")
+
     private Date date_ajout ;
     @Column(name = "date modification ")
     private Date date_modif ;
@@ -29,6 +31,15 @@ public class Course {
 
     @OneToMany(mappedBy = "id_chapitre")
     private List<Chapter> chapterList ;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @ManyToOne()
     private User user ;
     public Course() {
@@ -61,11 +72,13 @@ public class Course {
 
 
 
-    public Course(String description, Date dateAjout, Date dateModif) {
-        this.course_description = description;
-        date_ajout = dateAjout;
-        date_modif = dateModif;
+    public Course(String description,  User user) {
 
+        this.course_description = description;
+       this.date_ajout = new Date();
+
+
+        this.user = user;
     }
 
 
