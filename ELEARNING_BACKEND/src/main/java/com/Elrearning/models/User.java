@@ -2,6 +2,7 @@ package com.Elrearning.models;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -52,6 +53,8 @@ public class User implements UserDetails{
         inverseJoinColumns = {@JoinColumn(name="role_id")}
     )
     private Set<Role> authorities;
+	@OneToMany(mappedBy = "idCourse")
+	private List<Course> courses ;
 
     public User() {
 		super();
