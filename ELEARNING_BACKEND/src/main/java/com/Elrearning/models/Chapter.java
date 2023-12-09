@@ -6,13 +6,17 @@ import jakarta.persistence.*;
 public class Chapter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_chapitre;
+    private int id_chapitre;
+    @Column(name = "titre")
+    private String titre ;
     @Column(name = "description_chapitre")
     private String chapter_description ;
+
 @ManyToOne
 private Course course ;
 
-    public Chapter(String chapterDescription, Course course) {
+    public Chapter(String titre, String chapterDescription, Course course) {
+        this.titre = titre;
         chapter_description = chapterDescription;
         this.course = course;
     }
@@ -21,12 +25,13 @@ private Course course ;
 
     }
 
-    public void setId_chapitre(Long id) {
-        this.id_chapitre = id;
+
+    public String getTitre() {
+        return titre;
     }
 
-    public Long getId_chapitre() {
-        return id_chapitre;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
     public String getChapter_description() {
@@ -36,4 +41,5 @@ private Course course ;
     public void setChapter_description(String chapter_description) {
         this.chapter_description = chapter_description;
     }
+
 }

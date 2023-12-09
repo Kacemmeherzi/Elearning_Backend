@@ -18,10 +18,17 @@ private final CourseService courseService ;
         this.courseService = courseService;
     }
 
-    @PostMapping("/addcourse/{id}")
-    public ResponseEntity<?> addcourse (@RequestBody CourseDTO course , @PathVariable int id ) {
 
-        courseService.addcourse(course, id );
+    @GetMapping("/allcourses")
+    public ResponseEntity<?> getallcourses () {
+
+        return  new ResponseEntity<>(courseService.getall(),HttpStatus.OK) ;
+
+    }
+    @PostMapping("/addcourse/{id}")
+    public ResponseEntity<?> addcourse (@RequestBody CourseDTO coursedto , @PathVariable int id ) {
+
+      Course course= courseService.addcourse(coursedto, id );
         return  new ResponseEntity<>(course, HttpStatus.CREATED);
 
 

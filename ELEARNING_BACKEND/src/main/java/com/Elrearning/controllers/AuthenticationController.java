@@ -31,13 +31,13 @@ public class AuthenticationController {
     private UserRepository userRepository ;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody String username ,String password ,String email ){
-        if (userRepository.findByUsername(username).isPresent()){
+    public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO dto ){
+        if (userRepository.findByUsername(dto.getUsername()).isPresent()){
             return new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
 
         }
       else {
-        authenticationService.registerUser(username,password,email);
+        authenticationService.registerUser(dto);
         return (ResponseEntity<?>) ResponseEntity.ok("ADDED");}
     }
     

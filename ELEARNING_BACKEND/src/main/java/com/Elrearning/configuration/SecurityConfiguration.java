@@ -67,6 +67,7 @@ private JwtFilter jwtFilter ;
                 auth.requestMatchers("/admin/**");
                 auth.requestMatchers("/user/**");
                 auth.requestMatchers("/course/**");
+                auth.requestMatchers("/chapter/**");
                 auth.anyRequest().authenticated().and()
                         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
             });

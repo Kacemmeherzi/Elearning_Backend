@@ -38,15 +38,15 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(String username , String password , String email){
+    public User registerUser(RegistrationDTO dto){
 
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
-      User user =  new User( username,  email,encodedPassword, "STUDENT", authorities);
+      User user =  new User(dto.getUsername(), dto.getEmail(), encodedPassword, "STUDENT", authorities);
 
         return userRepository.save(user);
     }

@@ -13,6 +13,8 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idCourse;
+    @Column(name = "titre")
+    private String titre;
     @Column(name = "description_cours")
     private String course_description;
     @Column(name = "date dajout ")
@@ -46,6 +48,14 @@ public class Course {
 
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
     public String getCourse_description() {
         return course_description;
     }
@@ -70,9 +80,12 @@ public class Course {
         this.date_modif = date_modif;
     }
 
+public void addchapter (Chapter chapter){
+        this.chapterList.add(chapter) ;
+}
 
-
-    public Course(String description,  User user) {
+    public Course(String titre, String description, User user) {
+        this.titre = titre;
 
         this.course_description = description;
        this.date_ajout = new Date();
