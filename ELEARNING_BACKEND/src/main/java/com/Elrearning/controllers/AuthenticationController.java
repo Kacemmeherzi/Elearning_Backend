@@ -46,7 +46,7 @@ public class AuthenticationController {
 LoginResponseDTO dto = authenticationService.loginUser(body.getUsername(), body.getPassword());
 if (dto.getUser()!= null){
 return   ResponseEntity.ok(dto);}
-else return  new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
+else return  new ResponseEntity<>("INVALID CRIDENTIALS ", HttpStatus.NOT_FOUND);
 
 
     }

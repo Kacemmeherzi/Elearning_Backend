@@ -10,9 +10,20 @@ public class CourseDTO {
     }
 
     private   String course_description ;
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
+    }
+
+    private int idCategory ;
 private String titre ;
-    public CourseDTO(String courseDescription, String titre) {
+    public CourseDTO(String courseDescription, int idCategory, String titre) {
         course_description = courseDescription;
+        this.idCategory = idCategory;
         this.titre = titre;
     }
     public String getCourse_description() {

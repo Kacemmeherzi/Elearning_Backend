@@ -23,9 +23,19 @@ public class Course {
     private Date date_ajout ;
     @Column(name = "date modification ")
     private Date date_modif ;
-
+@ManyToOne
+@JoinColumn(name = "idCategory")
+private  Category category ;
     public List<Chapter> getChapterList() {
         return chapterList;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setChapterList(List<Chapter> chapterList) {

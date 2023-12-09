@@ -55,7 +55,7 @@ private final UserRepository userRepository ;
             return new  ResponseEntity<>("ADDED",HttpStatus.CREATED);
         } else {
 
-            return  new ResponseEntity<>("ALREADY EXIST",HttpStatus.EXPECTATION_FAILED);
+            return  new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

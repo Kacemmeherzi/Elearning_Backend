@@ -2,6 +2,8 @@ package com.Elrearning.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Category {
     public Category( String label, String description) {
@@ -12,13 +14,14 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int idCategory;
 @Column(name = "label",unique = true)
     private  String label;
 @Column(name ="description")
     private  String description ;
 
-
+@OneToMany
+private List<Course> courses ;
 
 
     public Category() {
@@ -26,11 +29,11 @@ public class Category {
     }
 
     public int getId() {
-        return id;
+        return idCategory;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idCategory = id;
     }
 
     public String getLabel() {

@@ -23,7 +23,7 @@ public class User implements UserDetails{
 
 	@Column(name = "email",unique=true)
 	private String email;
-
+@JsonIgnore
 	@Column(name= "password",length = 1000)
     private String password;
 

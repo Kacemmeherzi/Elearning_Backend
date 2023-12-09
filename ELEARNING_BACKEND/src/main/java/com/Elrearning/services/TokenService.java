@@ -2,29 +2,33 @@ package com.Elrearning.services;
 
 
 import java.util.Date;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
+import com.Elrearning.utils.ProjectProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class TokenService {
-    
 
 
-    static final String KEY = "Au+HOLt8D1G8s2N/Frv/BL/edOHij7qljXWmYG1i44vJhCassNlMkT7guItWkiwA+YQjpGSGnKwPfYWYjixGOV6W4ujMEaCY+UsFm0esXzAsyCgSwiy4x9g20jr/wwTvYyTNXBmrj6Qj1GW8ZGsjL17cbMT7+f/niVU7vRWfovD1onI1pWBP+g7rXtR7XQR6M6BY/NMfZsxYxj5FWbN+GSEmkW/DlvXS1b/VCw7xd6VEluGX8M7viJrxCE06AhOQPNRcP4DhZGUlTwH8pbulPnLoZeBs/x1HH4ysSZ2mMwgAqI3c39YK1unXu79wUgUMpR0JoinVuQUc/kc6EMqHqjljRx4IbwwZ1TdezEv4s68=";
+   @Autowired
+   private  final ProjectProperties properties ;
 
-    public static String generateJwt(Authentication auth){
+    public TokenService(ProjectProperties properties) {
+        this.properties = properties;
+    }
+
+    public  String generateJwt(Authentication auth){
+
+
         Date date = new Date();
 
         Date expirationDate = new Date(date.getTime()+10000000);
@@ -46,12 +50,12 @@ public class TokenService {
                 .claim("Claims","YOU ROCK")
                 .setIssuedAt(date)
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, KEY)
+                .signWith(SignatureAlgorithm.HS256,properties.getProperty())
                 .compact();
     }
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(properties.getProperty()).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
@@ -59,7 +63,7 @@ public class TokenService {
     }
     public String getUsernameFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(KEY)
+                .setSigningKey(properties.getProperty())
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
@@ -67,7 +71,7 @@ public class TokenService {
 
     public String getRoleFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(KEY)
+                .setSigningKey(properties.getProperty())
                 .parseClaimsJws(token)
                 .getBody();
         return (String) claims.get("roles");

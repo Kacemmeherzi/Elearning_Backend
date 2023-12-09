@@ -20,5 +20,9 @@ public class FileService {
         fileRepository.save(file ) ;
 
     }
+    public boolean checkifexist (String name ) {
+
+     return    fileRepository.findByName(name)!=null;
+    }
 
 }

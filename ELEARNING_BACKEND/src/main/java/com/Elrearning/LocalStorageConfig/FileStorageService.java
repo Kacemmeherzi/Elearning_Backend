@@ -61,11 +61,8 @@ private final FileService fileService ;
         return image;
     }
     public String saveVid (MultipartFile vediofile) throws IOException {
-        // Normalize image file name
-
-
+        // Normalize
         String uniqueId = UUID.randomUUID().toString();
-
 
         String originalFileName = vediofile.getOriginalFilename();
         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));

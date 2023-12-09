@@ -10,4 +10,5 @@ public interface FileRepository extends JpaRepository<FileEntity,Integer> {
 
 
     public FileEntity  findByName (String name) ;
+
 }

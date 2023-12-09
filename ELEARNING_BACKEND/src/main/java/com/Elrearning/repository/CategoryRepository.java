@@ -9,6 +9,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 
     public  Boolean existsByLabel (String label ) ;
-    public Boolean existsById (int id ) ;
+
 
 }

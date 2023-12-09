@@ -49,7 +49,7 @@ private final FileStorageService fileStorageService ;
 
     }
 
-
+// hethi meghir ma thot token fel header deja permitall() mahtouta
     @GetMapping("/stream/{videoFileName}")
     public ResponseEntity<StreamingResponseBody> streamVideo(@PathVariable String videoFileName, HttpServletResponse response) {
         Resource videoResource = fileStorageService.loadVideoAsResource(videoFileName);
