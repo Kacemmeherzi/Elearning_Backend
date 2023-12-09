@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class User implements UserDetails{
 	@Column(name = "email",unique=true)
 	private String email;
 
-	@Column(name= "password")
+	@Column(name= "password",length = 1000)
     private String password;
 
 	public String getUsertype() {
@@ -45,7 +46,7 @@ public class User implements UserDetails{
 		this.usertype = usertype;
 		this.authorities = authorities;
 	}
-
+@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name="user_role_junction",

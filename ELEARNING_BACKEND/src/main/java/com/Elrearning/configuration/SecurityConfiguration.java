@@ -36,11 +36,10 @@ public class SecurityConfiguration  {
 
     @Autowired
 private JwtFilter jwtFilter ;
-    private final RSAKeyProperties keys;
 
     public SecurityConfiguration(JwtFilter jwtFilter, RSAKeyProperties keys){
         this.jwtFilter = jwtFilter;
-        this.keys = keys;
+
     }
 
     @Bean
@@ -53,6 +52,8 @@ private JwtFilter jwtFilter ;
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
         daoProvider.setUserDetailsService(detailsService);
         daoProvider.setPasswordEncoder(passwordEncoder());
+
+
         return new ProviderManager(daoProvider);
     }
 

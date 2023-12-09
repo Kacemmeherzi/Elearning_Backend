@@ -31,7 +31,7 @@ public class CategoryController {
         return  categorieService.getall();
     }
     @PostMapping(value = "/addcategory")
-    public ResponseEntity<?> addcategory (@ModelAttribute  CategotyDTO categotyDTO) throws IOException {
+    public ResponseEntity<?> addcategory (@RequestBody  CategotyDTO categotyDTO)  {
         Category category = new Category( categotyDTO.getLabel(), categotyDTO.getDescription() );
         if (!categorieService.checkifexist(category)){
 

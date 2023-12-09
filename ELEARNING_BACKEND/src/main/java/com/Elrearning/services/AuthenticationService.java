@@ -38,24 +38,25 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    public User registerUser(RegistrationDTO dto){
+    public User registerUser(String username , String password , String email){
 
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
-      User user =  new User( dto.getUsername(), encodedPassword, dto.getEmail(), "STUDENT", authorities);
+      User user =  new User( username,  email,encodedPassword, "STUDENT", authorities);
 
         return userRepository.save(user);
     }
 
     public LoginResponseDTO loginUser(String username, String password){
 
+
         try{
             Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                new UsernamePasswordAuthenticationToken(username,password)
             );
 
             String token = tokenService.generateJwt(auth);

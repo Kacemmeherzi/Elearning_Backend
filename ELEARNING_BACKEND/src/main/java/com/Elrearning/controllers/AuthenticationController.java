@@ -3,6 +3,7 @@ package com.Elrearning.controllers;
 import com.Elrearning.repository.UserRepository;
 import com.Elrearning.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,21 +31,23 @@ public class AuthenticationController {
     private UserRepository userRepository ;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegistrationDTO body){
-        if (userRepository.findByUsername(body.getUsername()).isPresent()){
-            return (ResponseEntity<?>) ResponseEntity.ok("User Already exist");
+    public ResponseEntity<?> registerUser(@RequestBody String username ,String password ,String email ){
+        if (userRepository.findByUsername(username).isPresent()){
+            return new ResponseEntity<>("ALREADY EXIST",HttpStatus.NOT_ACCEPTABLE);
 
         }
       else {
-        authenticationService.registerUser(body);
+        authenticationService.registerUser(username,password,email);
         return (ResponseEntity<?>) ResponseEntity.ok("ADDED");}
     }
     
     @PostMapping("/login")
     public ResponseEntity<?>  loginUser(@RequestBody RegistrationDTO body){
+LoginResponseDTO dto = authenticationService.loginUser(body.getUsername(), body.getPassword());
+if (dto.getUser()!= null){
+return   ResponseEntity.ok(dto);}
+else return  new ResponseEntity<>("ERROR", HttpStatus.NOT_FOUND);
 
-
-return   ResponseEntity.ok(authenticationService.loginUser(body.getUsername(), body.getPassword()));
 
     }
 }   

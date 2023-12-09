@@ -52,7 +52,7 @@ public void addteacher (RegistrationDTO user) {
     Set<Role> authorities = new HashSet<>();
 
     authorities.add(userRole);
-    User teacher = new User( user.getUsername(),encoder.encode(user.getPassword()) ,user.getEmail(),"TEACHER",authorities);
+    User teacher = new User( user.getUsername(), user.getEmail(),encoder.encode(user.getPassword()),"TEACHER",authorities);
        userRepository.save(teacher);
 
 }
