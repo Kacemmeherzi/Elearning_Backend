@@ -3,6 +3,8 @@ package com.Elrearning.LocalStorageConfig;
 import com.Elrearning.models.FileEntity;
 import com.Elrearning.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +20,7 @@ import java.util.UUID;
 
 @Service
 public class FileStorageService {
-   final String baseUrl = "/display/"   ;
+
 
     @Autowired
     private  final  StorageConfig fileStorageConfig;
@@ -52,11 +54,33 @@ private final FileService fileService ;
         Path imagePath = Paths.get(fileStorageConfig.getUploadDir()).resolve(filename).normalize();
 
 
-        String url = baseUrl+filename ;
+
         Files.copy(imageFile.getInputStream(), imagePath);
         FileEntity image = new FileEntity("image",filename);
         fileService.savefile(image);
         return image;
+    }
+    public String saveVid (MultipartFile vediofile) throws IOException {
+        // Normalize image file name
+
+
+        String uniqueId = UUID.randomUUID().toString();
+
+
+        String originalFileName = vediofile.getOriginalFilename();
+        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+
+        String filename = uniqueId + fileExtension;
+
+        // Resolve the image file path within the category directory
+        Path imagePath = Paths.get(fileStorageConfig.getUploadDir()).resolve(filename).normalize();
+
+
+
+        Files.copy(vediofile.getInputStream(), imagePath);
+        FileEntity vedio = new FileEntity("vedio",filename);
+        fileService.savefile(vedio);
+return filename ;
     }
 
     public byte[] loadImageAsBytes( String imageName) throws IOException {
@@ -73,6 +97,20 @@ private final FileService fileService ;
             return image != null;
         } catch (IOException e) {
             return false;
+        }
+    }
+    public Resource loadVideoAsResource(String videoFileName) {
+        try {
+            Path vidpath = Paths.get(fileStorageConfig.getUploadDir()).resolve(videoFileName).normalize();
+            Resource resource = new UrlResource(vidpath.toUri());
+
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("Video not found: " + videoFileName);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Video not found: " + videoFileName, ex);
         }
     }
 }

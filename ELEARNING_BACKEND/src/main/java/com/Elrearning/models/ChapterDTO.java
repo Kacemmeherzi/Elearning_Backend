@@ -4,6 +4,9 @@ public class ChapterDTO {
     private String titre ;
     private String description ;
 
+
+
+
     public String getTitre() {
         return titre;
     }
@@ -23,5 +26,6 @@ public class ChapterDTO {
     public ChapterDTO(String titre, String description) {
         this.titre = titre;
        this.description = description;
+
     }
 }

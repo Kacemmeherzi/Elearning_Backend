@@ -35,10 +35,7 @@ public class ElearningBackendApplication {
 
 			userRepository.save(admin);
 			storageConfig.init();
-			String pass = "kacem";
-			String encoded = passwordEncode.encode(pass);
-			boolean ok = passwordEncode.matches(pass,encoded);
-			System.out.println(ok);
+
 		};
 	}
 }

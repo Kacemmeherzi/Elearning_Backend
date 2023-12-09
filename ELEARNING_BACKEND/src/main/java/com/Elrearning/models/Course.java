@@ -1,5 +1,6 @@
 package com.Elrearning.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -30,7 +31,7 @@ public class Course {
     public void setChapterList(List<Chapter> chapterList) {
         this.chapterList = chapterList;
     }
-
+@JsonIgnore
     @OneToMany(mappedBy = "id_chapitre")
     private List<Chapter> chapterList ;
 
@@ -43,6 +44,7 @@ public class Course {
     }
 
     @ManyToOne()
+    @JoinColumn(name = "userId")
     private User user ;
     public Course() {
 

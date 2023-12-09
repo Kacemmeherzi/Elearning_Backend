@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 @RequestMapping("/category")
+@CrossOrigin("*")
 @RestController
 public class CategoryController {
 

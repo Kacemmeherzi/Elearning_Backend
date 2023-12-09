@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ChapterService {
@@ -18,27 +17,32 @@ public class ChapterService {
     @Autowired
      private final CourseRepository courseRepository ;
 
-    public ChapterService(ChapterRepository chapterRepository, CourseRepository courseRepository, CourseService courseService, CourseRepository courseRepository1) {
+    public ChapterService(ChapterRepository chapterRepository,  CourseService courseService, CourseRepository courseRepository) {
         this.chapterRepository = chapterRepository;
 
 
-        this.courseRepository = courseRepository1;
+        this.courseRepository = courseRepository;
     }
 
-    public boolean addchapter (long courseid, ChapterDTO chapterDTO){
+    public boolean addchapter (long courseid, ChapterDTO chapterDTO, String vedioname) {
 
 
 if (courseRepository.existsById(courseid)){
 
-    Optional<Course> course = courseRepository.findById(courseid) ;
-    Chapter chapter = new Chapter(chapterDTO.getTitre(), chapterDTO.getDescription(), course.get());
-    System.out.println(chapter);
-    course.get().addchapter(chapter);
+    Course course = courseRepository.findById(courseid).get() ;
+    Chapter chapter = new Chapter(chapterDTO.getTitre(), chapterDTO.getDescription() , course);
+    chapter.setVedio_name(vedioname);
+    System.out.println(chapter.toString());
+    course.addchapter(chapter);
     chapterRepository.save(chapter);
-    courseRepository.saveAndFlush(course.get());
+    courseRepository.saveAndFlush(course);
     return true ;
 }
 else
         return false;
+    }
+    public List<Chapter> getchaptersbycourseid(long id ){
+
+ return  chapterRepository.findbyallbycourseid(id) ;
     }
 }
